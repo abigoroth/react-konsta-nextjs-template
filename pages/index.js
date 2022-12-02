@@ -1,4 +1,8 @@
 import React from 'react';
+import { register, useForm, Controller } from "react-hook-form";
+import {Select, Checkbox, MenuItem, TextField, Button, label, RadioGroup, FormControlLabel, Radio,
+FormGroup} from "@mui/material";
+
 import {
   Page,
   Navbar,
@@ -13,7 +17,16 @@ import {
 } from 'konsta/react';
 import { MdPerson, MdEmail, MdToday, MdFileUpload } from 'react-icons/md';
 
+
 export default function BadgePage() {
+  const { control, formState: { errors }, handleSubmit } = useForm({
+    defaultValues: {
+      firstName: '',
+      select: {}
+    }
+  });
+  const onSubmit = data => console.log(data);
+
   return (
     <Page>
       <Navbar
@@ -28,6 +41,46 @@ export default function BadgePage() {
           </Link>
         }
       />
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Controller
+          name="firstName"
+          control={control}
+          rules={{ required: true, maxLength: 20 }}
+          render={({ field }) => <TextField {...field}
+            label="Name"
+            helperText={errors.firstName?.type == 'required' && 'Required'}
+            fullWidth
+            margin="normal" />
+          }
+        />
+        <Controller
+          name="select"
+          control={control}
+          render={({ field }) =>
+            <Select{...field}
+              label="Age" fullWidth margin="dense">
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>}
+        />
+        <FormGroup>
+          <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
+          <FormControlLabel disabled control={<Checkbox />} label="Disabled" />
+        </FormGroup>
+        <RadioGroup
+          aria-labelledby="demo-radio-buttons-group-label"
+          defaultValue="female"
+          name="radio-buttons-group"
+          row
+        >
+          <FormControlLabel value="female" control={<Radio />} label="Female" />
+          <FormControlLabel value="male" control={<Radio />} label="Male" />
+          <FormControlLabel value="other" control={<Radio />} label="Other" />
+        </RadioGroup>
+        <Button type="submit" variant="outlined" >Submit</Button>
+      </form>
       <Tabbar labels icons className="bottom-0 fixed" id='mainNav'>
         <TabbarLink
           active
@@ -61,6 +114,7 @@ export default function BadgePage() {
           label="Upload"
         />
       </Tabbar>
+
       <List strong inset>
         <ListItem
           media={<MdPerson className="w-6 h-6" />}
