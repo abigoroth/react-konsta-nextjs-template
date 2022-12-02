@@ -27,3 +27,16 @@ a {
     background: black;
   }
 }
+
+@media only screen and (min-width: 768px) {
+  body {
+    width: 414px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #mainNav {
+    width: 414px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
