@@ -18,6 +18,7 @@ import {
   Experimental_CssVarsProvider as CssVarsProvider,
   useColorScheme,
 } from '@mui/material/styles';
+import Switch from '@mui/material/Switch';
 
 const ModeSwitcher = () => {
   const { mode, setMode } = useColorScheme('dark');
@@ -28,6 +29,8 @@ const ModeSwitcher = () => {
     //automatically set darkMode if dark detected
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       setMode('dark')
+    } else {
+      setMode('light')
     }
   }, []);
 
@@ -38,18 +41,24 @@ const ModeSwitcher = () => {
   }
 
   return (
-    <Button
-      variant="outlined"
-      onClick={() => {
-        if (mode === 'light') {
-          setMode('dark');
-        } else {
-          setMode('light');
-        }
-      }}
+    <FormControlLabel
+      label={mode === 'light' ? 'Dark' : 'Light'}
+      control={
+        <Switch
+        variant="outlined"
+        onClick={() => {
+          if (mode === 'light') {
+            setMode('dark');
+          } else {
+            setMode('light');
+          }
+        }}
+      >
+      </Switch>
+      }
     >
-      {mode === 'light' ? 'Dark' : 'Light'}
-    </Button>
+
+    </FormControlLabel>
   );
 };
 
@@ -66,7 +75,7 @@ export default function BadgePage() {
     <CssVarsProvider>
       <Page className='dark'>
         <Navbar
-          title="Badge"
+          title="Kokoban KoMuiNextRHF"
           right={
             <Link navbar iconOnly>
               <Icon
@@ -77,47 +86,50 @@ export default function BadgePage() {
             </Link>
           }
         />
-        <ModeSwitcher mode='dark' />
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            name="firstName"
-            control={control}
-            rules={{ required: true, maxLength: 20 }}
-            render={({ field }) => <TextField {...field}
-              label="Name"
-              className='dark'
-              helperText={errors.firstName?.type == 'required' && 'Required'}
-              fullWidth
-              margin="normal" />
-            }
-          />
-          <Controller
-            name="select"
-            control={control}
-            render={({ field }) =>
-              <Select{...field}
-                label="Age" fullWidth margin="dense">
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>}
-          />
-          <FormGroup>
-            <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
-            <FormControlLabel disabled control={<Checkbox />} label="Disabled" />
-          </FormGroup>
-          <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="female"
-            name="radio-buttons-group"
-            row
-          >
-            <FormControlLabel value="female" control={<Radio />} label="Female" />
-            <FormControlLabel value="male" control={<Radio />} label="Male" />
-            <FormControlLabel value="other" control={<Radio />} label="Other" />
-          </RadioGroup>
-          <Button type="submit" variant="outlined" >Submit</Button>
-        </form>
+        <div className='px-5'>
+        <ModeSwitcher mode='dark' className='hidden' />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+              name="firstName"
+              control={control}
+              rules={{ required: true, maxLength: 20 }}
+              render={({ field }) => <TextField {...field}
+                label="Name"
+                className='dark'
+                helperText={errors.firstName?.type == 'required' && 'Required'}
+                fullWidth
+                margin="normal" />
+              }
+            />
+            <Controller
+              name="select"
+              control={control}
+              render={({ field }) =>
+                <Select{...field}
+                  label="Age" fullWidth margin="dense">
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>}
+            />
+            <FormGroup>
+              <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
+              <FormControlLabel disabled control={<Checkbox />} label="Disabled" />
+            </FormGroup>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue="female"
+              name="radio-buttons-group"
+              row
+            >
+              <FormControlLabel value="female" control={<Radio />} label="Female" />
+              <FormControlLabel value="male" control={<Radio />} label="Male" />
+              <FormControlLabel value="other" control={<Radio />} label="Other" />
+            </RadioGroup>
+            <Button type="submit" variant="outlined" >Submit</Button>
+          </form>
+        </div>
+
         <Tabbar labels icons className="bottom-0 fixed" id='mainNav'>
           <TabbarLink
             active
