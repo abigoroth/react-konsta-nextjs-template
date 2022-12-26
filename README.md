@@ -11,3 +11,13 @@ This will allow you to start your project with all the goodness ready.
 Dark             |  Light
 :-------------------------:|:-------------------------:
 ![image](https://user-images.githubusercontent.com/520990/207330228-e31194ca-6024-446e-8f7a-c7f8c065fe9a.png) |  ![image](https://user-images.githubusercontent.com/520990/207331178-3fe51ab6-2c9d-4930-b220-5acb5ec79b66.png)
+
+# Installation
+install tool as in .tool-versions
+
+then
+```
+yarn install
+yarn next build
+yarn next start
+```
